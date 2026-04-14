@@ -57,6 +57,14 @@ export default async function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    /*
+     * 아래 경로를 제외한 모든 요청 경로 일치:
+     * - _next/static (정적 파일)
+     * - _next/image (이미지 최적화)
+     * - favicon.ico (아이콘 파일)
+     * - public 폴더 내의 정적 이미지들
+     * - api 경로 (필요 시 제외하거나 별도 처리)
+     */
+    '/((?!_next/static|_next/image|favicon.ico|api/|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
 }
