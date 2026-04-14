@@ -42,7 +42,7 @@ export function DeleteDialog({
               연락처 삭제
             </h3>
             <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
-              정말로 <strong className="text-zinc-700 dark:text-zinc-300">"{contactName}"</strong> 연락처를 삭제하시겠습니까?<br/>이 작업은 되돌릴 수 없습니다.
+              정말로 <strong className="text-zinc-700 dark:text-zinc-300">&quot;{contactName}&quot;</strong> 연락처를 삭제하시겠습니까?<br/>이 작업은 되돌릴 수 없습니다.
             </p>
             
             <div className="flex gap-3 justify-end mt-6">

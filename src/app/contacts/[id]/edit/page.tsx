@@ -6,8 +6,12 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { decryptField } from '@/lib/crypto'
 
-export default async function EditContactPage({ params }: { params: { id: string } }) {
-  const { id } = params
+export default async function EditContactPage({ 
+  params 
+}: { 
+  params: Promise<{ id: string }> 
+}) {
+  const { id } = await params
   
   const [categories, supabase] = await Promise.all([
     getCategories(),
@@ -42,24 +46,28 @@ export default async function EditContactPage({ params }: { params: { id: string
   }
 
   return (
-    <div className="flex flex-col max-w-2xl mx-auto w-full pt-8 pb-16 animate-in slide-in-from-bottom-8 duration-500">
-      <div className="flex items-center gap-4 mb-8">
+    <div className="flex flex-col max-w-2xl mx-auto w-full pt-12 pb-24 animate-in slide-in-from-bottom-12 duration-1000">
+      <div className="flex items-center gap-6 mb-12">
         <Link 
           href="/contacts"
-          className="w-10 h-10 flex items-center justify-center rounded-full bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 transition"
+          className="w-12 h-12 flex items-center justify-center rounded-2xl bg-white/80 dark:bg-zinc-900/80 shadow-premium hover:shadow-hover hover:-translate-x-1 transition-all"
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
           </svg>
         </Link>
-        <h1 className="text-2xl font-bold tracking-tight">연락처 수정</h1>
+        <div>
+          <h1 className="text-3xl font-extrabold tracking-tight font-display">연락처 수정</h1>
+          <p className="text-zinc-500 dark:text-zinc-400 text-sm font-medium">정보를 최신으로 업데이트하세요.</p>
+        </div>
       </div>
       
-      <div className="bg-white dark:bg-zinc-900 shadow-xl shadow-black/5 dark:shadow-white/5 border border-zinc-100 dark:border-zinc-800 rounded-3xl p-6 sm:p-10">
+      <div className="glass rounded-[3rem] p-8 sm:p-12 shadow-premium">
         <ContactForm 
           action={handleUpdate} 
           categories={categories}
           initialData={initialData}
+          onCancel={() => redirect('/contacts')}
         />
       </div>
     </div>

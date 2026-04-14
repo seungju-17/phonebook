@@ -32,13 +32,7 @@ export async function getContacts({
     query = query.eq('category_id', categoryId)
   }
 
-  // 정확 일치 검색은 DB 레벨에서 필터링 가능
-  if (searchQuery) {
-    const blindIndex = createBlindIndex(searchQuery)
-    // 부분 일치는 아래 메모리 필터링으로 처리하되, 우선 가져올 데이터를 줄이기 위한 최적화가 필요할 수 있음
-    // 여기서는 단순성을 위해 검색어가 있으면 전체를 가져와 메모리에서 필터링합니다 (대규모 데이터에는 부적합하지만 소규모 연락처용)
-    // 정확 일치라면 .or(`name_index.eq.${blindIndex},phone_index.eq.${blindIndex}`) 가능
-  }
+  // 부분 일치 검색 필터링을 위해 데이터를 가져온 후 메모리에서 처리합니다.
 
   // 검색어가 없을 때만 DB 페이징 수행
   if (!searchQuery) {
